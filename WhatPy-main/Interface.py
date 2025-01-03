@@ -53,8 +53,15 @@ def carregar_img():
         ("Imagens TIFF", "*.tiff"),
         ("Ícones", "*.ico"),
         ("Todos os Arquivos", "*.*")
-        ]
-    )
+        ])
+    if arquivo_img: 
+       atualizar_feedback(f"Imagem carregada: {arquivo_img}", terminal_box) 
+    else: 
+       atualizar_feedback("Nenhuma imagem foi carregada", terminal_box)        
+    return arquivo_img
+        # Retorna o caminho do arquivo carregado # Função do Terminal def atualizar_feedback(mensagem, terminal_box): if terminal_box.winfo_exists(): # Verifica se o widget ainda existe terminal_box.configure(state="normal") terminal_box.delete("1.0", "end") terminal_box.insert("1.0", mensagem) terminal_box.configure(state="disabled") # Exemplo de como usar as funções root = tk.Tk() terminal_box = tk.Text(root, state="disabled") terminal_box.pack() carregar_img(terminal_box) # Chama a função carregar_img e atualiza o terminal root.mainloop()
+        
+
 
 # Função do Terminal
 def atualizar_feedback(mensagem, terminal_box):
