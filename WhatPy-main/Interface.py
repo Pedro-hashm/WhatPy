@@ -59,14 +59,14 @@ def carregar_img():
     arquivo_img = filedialog.askopenfilename(
         title='Selecione um Arquivo',
         filetypes=[("Imagens JPEG", "*.jpg *.jpeg"),
-                  ("Imagens PNG", "*.png"),
-                  ("Imagens GIF", "*.gif"),
-                  ("Imagens BMP", "*.bmp"),
-                  ("Imagens WebP", "*.webp"),
-                  ("Imagens SVG", "*.svg"),
-                  ("Imagens TIFF", "*.tiff"),
-                  ("Ícones", "*.ico"),
-                  ("Todos os Arquivos", "*.*")]
+            ("Imagens PNG", "*.png"),
+            ("Imagens GIF", "*.gif"),
+            ("Imagens BMP", "*.bmp"),
+            ("Imagens WebP", "*.webp"),
+            ("Imagens SVG", "*.svg"),
+            ("Imagens TIFF", "*.tiff"),
+            ("Ícones", "*.ico"),
+            ("Todos os Arquivos", "*.*")]
     )
     if arquivo_img: 
        atualizar_feedback(f"Imagem carregada: {arquivo_img}", terminal_box) 
@@ -147,7 +147,7 @@ tab_close.bind("<Leave>", esconder_tooltip)
 inst_msg_var = ctk.BooleanVar()
 inst_msg = ctk.CTkCheckBox(frametxt, text="Começar Imediatamente?", variable=inst_msg_var, command=toggle_textbox)
 inst_msg.grid(row=2, column=0, padx=(10, 10), pady=(10,10), sticky="w")
-inst_msg.bind("<Enter>", lambda event: mostrar_tooltip(event, "Enviar mensagens imediatamente"))
+inst_msg.bind("<Enter>", lambda event: mostrar_tooltip(event, "Marcado: As mensagens serão enviads "))
 inst_msg.bind("<Leave>", esconder_tooltip)
 
 # Label para exibir o valor do slider
