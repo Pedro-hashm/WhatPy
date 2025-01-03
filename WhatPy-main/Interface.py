@@ -2,6 +2,8 @@ import customtkinter as ctk
 import tkinter as tk
 from customtkinter import filedialog
 import csv
+arquivo_img = None
+
 
 # Função para mostrar um tooltip (balão de comentário)
 def mostrar_tooltip(event, texto):

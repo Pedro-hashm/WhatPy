@@ -23,6 +23,7 @@ Image: C:/Users/PEDRO SILVA/Downloads/Leonardo_Anime_XL_A_male_cartoon_mascot_wi
 Caption: oi
 --------------------
 Date: 3/1/2025
+<<<<<<< Updated upstream
 Time: 11:19
 Phone Number: +5581991280320
 Message: ai ai
@@ -31,4 +32,9 @@ Date: 3/1/2025
 Time: 11:19
 Phone Number: +5581998765432
 Message: ai ai
+=======
+Time: 11:46
+Phone Number: +5581991280320
+Message: 
+>>>>>>> Stashed changes
 --------------------

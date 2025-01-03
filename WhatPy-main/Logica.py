@@ -32,6 +32,12 @@ def enviar_mensagem(texto, tempo_espera, tab_fechar, começar_imd, hora_começo,
         hora = int(nova_hora_começo[0:2])
         minuto = int(nova_hora_começo[2:4])
 
+    # Verificação de texto vazio antes de tentar enviar
+
+    if not texto.strip():  # Verifica se o texto está vazio ou contém apenas espaços
+        atualizar_feedback_func("Mensagem vazia!", terminal_box)
+        return  # Impede a execução do código para envio da mensagem
+
     # Casos de Execução
 
     for phone in phonesl:
