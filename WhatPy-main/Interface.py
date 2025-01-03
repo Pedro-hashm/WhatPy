@@ -57,7 +57,8 @@ def carregar_img():
     global arquivo_img
     arquivo_img = filedialog.askopenfilename(
         title='Selecione um Arquivo',
-        filetypes=[("Imagens JPEG", "*.jpg *.jpeg"),
+        filetypes=[
+            ("Imagens JPEG", "*.jpg *.jpeg"),
             ("Imagens PNG", "*.png"),
             ("Imagens GIF", "*.gif"),
             ("Imagens BMP", "*.bmp"),
@@ -121,16 +122,34 @@ frametxt.grid_columnconfigure(0, weight=1)
 frametxt.grid_columnconfigure(1, weight=1)
 
 # Botão CSV
-csv_button = ctk.CTkButton(framecsv, text="Carregar Arquivo CSV", command=carregar_csv, height=50, fg_color="green")
+
+csv_button = ctk.CTkButton(
+    
+    framecsv, 
+    text="Carregar Arquivo CSV", 
+    command=carregar_csv, 
+    height=50, 
+    fg_color="green",  # Cor de fundo do botão
+    hover_color="green"  # Mantém a mesma cor ao passar o mouse
+)
 csv_button.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="nsew")
 csv_button.bind("<Enter>", lambda event: mostrar_tooltip(event, "Carregar um arquivo CSV"))
 csv_button.bind("<Leave>", esconder_tooltip)
 
 # Botão Img
-img_button = ctk.CTkButton(frameimg, text="Carregar Imagem", command=carregar_img, height=50,fg_color="green")
+img_button = ctk.CTkButton(
+    frameimg, 
+    text="Carregar Imagem", 
+    command=carregar_img, 
+    height=50,
+    fg_color="green",  # Cor de fundo do botão
+    hover_color="green"  # A cor do botão não mudará ao passar o mouse
+)
 img_button.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="nsew")
 img_button.bind("<Enter>", lambda event: mostrar_tooltip(event, "Carregar uma imagem"))
 img_button.bind("<Leave>", esconder_tooltip)
+
+
 
 # Caixa de Texto
 txt_box = ctk.CTkTextbox(frametxt)
@@ -138,15 +157,39 @@ txt_box.grid(row=0, column=0, padx=(10,10), pady=(10,10), sticky="nsew", columns
 
 # CheckBoxes
 tab_close_var = ctk.BooleanVar()
-tab_close = ctk.CTkCheckBox(frametxt, text="Fechar Abas?", command=None, variable=tab_close_var)
+tab_close = ctk.CTkCheckBox(frametxt, text="Fechar Abas?", command=None, variable=tab_close_var, fg_color="green")
 tab_close.grid(row=1, column=0, padx=(10, 10), pady=(10,10), sticky="w")
-tab_close.bind("<Enter>", lambda event: mostrar_tooltip(event, "Marcado: As abas do Whatsapp serão fechadas a cada mensagem enviada\nDesmarcado: As abas permanecerão abertas mesmo após o envio da mensagem"))
+
+# Funções para alterar a cor ao passar o mouse
+def on_enter(event):
+    tab_close.configure(fg_color="darkgreen")  # Muda para um verde escuro
+
+def on_leave(event):
+    tab_close.configure(fg_color="green")  # Restaura o verde original
+
+tab_close.bind("<Enter>", on_enter)
+tab_close.bind("<Leave>", on_leave)
+
+tab_close.bind("<Enter>", lambda event: mostrar_tooltip(event, "Fechar as abas ao final"))
 tab_close.bind("<Leave>", esconder_tooltip)
 
+
+
 inst_msg_var = ctk.BooleanVar()
-inst_msg = ctk.CTkCheckBox(frametxt, text="Começar Imediatamente?", variable=inst_msg_var, command=toggle_textbox)
+inst_msg = ctk.CTkCheckBox(frametxt, text="Começar Imediatamente?", variable=inst_msg_var, command=toggle_textbox, fg_color="green")
 inst_msg.grid(row=2, column=0, padx=(10, 10), pady=(10,10), sticky="w")
-inst_msg.bind("<Enter>", lambda event: mostrar_tooltip(event, "Marcado: As mensagens serão enviadas logo após apertar o botão de enviar\nDesmarcado: As mensagens serão enviadas após o tempo descrito"))
+
+# Funções para alterar a cor ao passar o mouse
+def on_enter_inst_msg(event):
+    inst_msg.configure(fg_color="darkgreen")  # Muda para um verde escuro
+
+def on_leave_inst_msg(event):
+    inst_msg.configure(fg_color="green")  # Restaura a cor original (cinza)
+
+inst_msg.bind("<Enter>", on_enter_inst_msg)
+inst_msg.bind("<Leave>", on_leave_inst_msg)
+
+inst_msg.bind("<Enter>", lambda event: mostrar_tooltip(event, "Marcado: As mensagens serão enviadas"))
 inst_msg.bind("<Leave>", esconder_tooltip)
 
 # Label para exibir o valor do slider
@@ -155,7 +198,23 @@ tempo_label = ctk.CTkLabel(frametxt, text=f"Tempo de Espera para o envio por men
 tempo_label.grid(row=3, column=0, padx=(220,10), pady=(10,10), sticky="w")
 
 # Slider
-wait_time = ctk.CTkSlider(frametxt, from_=1, to=40, number_of_steps=39, command=atualizar_tempo, button_color='green', progress_color='green')
+import customtkinter as ctk
+
+# Configurar um tema sem efeitos de hover no botão do slider
+ctk.set_appearance_mode("Dark")  # Ou "Light", depende do seu gosto
+
+# Criação do CTkSlider
+wait_time = ctk.CTkSlider(
+    frametxt, 
+    from_=1, 
+    to=40, 
+    number_of_steps=39, 
+    command=atualizar_tempo, 
+    button_color='green',  # Cor do botão
+    progress_color='green'  # Cor da barra de progresso
+)
+
+# Aplicar a grade para a interface
 wait_time.grid(row=3, column=0, padx=(10,10), pady=(10,10), sticky="w")
 
 # Textbox para exibir "Escolha quando a mensagem será enviada"
@@ -172,7 +231,7 @@ feedback_label = ctk.CTkLabel(frametxt, text="Terminal do Programa")
 feedback_label.grid(row=1, column=1, padx=(10, 10), pady=(10, 5), sticky="w")
 
 # TextBox do Terminal
-terminal_box = ctk.CTkTextbox(frametxt, corner_radius=10, state="disabled")
+terminal_box = ctk.CTkTextbox(frametxt, corner_radius=10, state="disabled",)
 terminal_box.grid(row=2, column=1, rowspan=8 ,padx=(10,10), pady=(5,10), sticky="nsew")
 
 # Label da TXTbox numero da coluna
@@ -185,9 +244,11 @@ txtbox_coluna.grid(row=8, column=0, padx=(10,10), pady=(10,10), sticky="w")
 
 # Botão de enviar mensagem
 from Logica import enviar_mensagem
+
 enviar_button = ctk.CTkButton(
     frametxt, 
-    fg_color="green",
+    fg_color="green",  # Cor de fundo do botão
+    hover_color="green",  # A cor do botão não mudará ao passar o mouse
     text="Enviar Mensagems", 
     command=lambda: enviar_mensagem(
         txt_box.get("0.0", "end"), 
@@ -201,6 +262,8 @@ enviar_button = ctk.CTkButton(
     )
 )
 enviar_button.grid(row=8, column=0, padx=(100,10), pady=(10,10), sticky="w")
+
+# Tooltip do botão
 enviar_button.bind("<Enter>", lambda event: mostrar_tooltip(event, "Enviar as mensagens"))
 enviar_button.bind("<Leave>", esconder_tooltip)
 
