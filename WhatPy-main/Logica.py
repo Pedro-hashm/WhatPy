@@ -31,19 +31,19 @@ def enviar_mensagem(texto, tempo_espera, tab_fechar, começar_imd, hora_começo,
         nova_hora_começo = hora_começo.replace(",", "").strip()
         hora = int(nova_hora_começo[0:2])
         minuto = int(nova_hora_começo[2:4])
-    
 
-
-    # Se começar imediatamente for True, enviar Mensagem instantaneas, se não, enviar mensagem com hora e minuto
+    # Casos de Execução
 
     for phone in phonesl:
         if começar_imd == True and imagem == None:
-            print(tempo_espera)
             pywhatkit.sendwhatmsg_instantly(phone, texto, tempo_espera, tab_fechar, 5)
-        else:
-            print(hora)
-            print(minuto)
+        elif começar_imd == False and imagem == None:
             pywhatkit.sendwhatmsg(phone, texto, hora, minuto, tempo_espera, tab_fechar, 5)
+        elif começar_imd == True and imagem != None:
+            pywhatkit.sendwhats_image(phone, imagem, texto, tempo_espera, tab_fechar, 5)
+        elif começar_imd == False and imagem != None:
+            pywhatkit.sendwhats_image(phone, imagem, texto, hora, minuto, tempo_espera, tab_fechar, 5)
+        
     atualizar_feedback_func('mensagem enviada', terminal_box)
         
 
