@@ -9,7 +9,7 @@ def get_phones(arquivo_csv, row_number, terminal_box, atualizar_feedback_func):
         global phonesl
         reader = csv.reader(csvfile)
         phones = []
-
+        
         for row in reader:
             phone = "+55" + row[row_number]
             phones.append(phone)
@@ -31,6 +31,8 @@ def enviar_mensagem(texto, tempo_espera, tab_fechar, começar_imd, hora_começo,
         nova_hora_começo = hora_começo.replace(",", "").strip()
         hora = int(nova_hora_começo[0:2])
         minuto = int(nova_hora_começo[2:4])
+    
+
 
     # Se começar imediatamente for True, enviar Mensagem instantaneas, se não, enviar mensagem com hora e minuto
 
@@ -42,6 +44,8 @@ def enviar_mensagem(texto, tempo_espera, tab_fechar, começar_imd, hora_começo,
             print(hora)
             print(minuto)
             pywhatkit.sendwhatmsg(phone, texto, hora, minuto, tempo_espera, tab_fechar, 5)
+    atualizar_feedback_func('mensagem enviada', terminal_box)
+        
 
     # print(phonesl)
 

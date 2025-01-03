@@ -35,8 +35,9 @@ def carregar_csv():
             arquivo_csv=arquivo_csv,
             row_number=(int(txtbox_coluna.get("0.0", "end").strip()) - 1),
             terminal_box=terminal_box,
-            atualizar_feedback_func=atualizar_feedback
-        )
+            atualizar_feedback_func=atualizar_feedback )
+    else:
+        atualizar_feedback("Nenhum csv foi carregada", terminal_box)   
 
 # Função carregar IMG
 def carregar_img():
