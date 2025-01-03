@@ -27,7 +27,7 @@ def esconder_tooltip(event):
 
 # Função do Slider
 def atualizar_tempo(wait_time_value):
-    tempo_label.configure(text=f"Tempo de Espera para o envio por mensagens: {int(wait_time_value)}")
+    tempo_label.configure(text=f"Tempo de espera em segundos por mensagem: {int(wait_time_value)}")
 
 # Função de esconder TextBox da hora
 def toggle_textbox():
@@ -86,6 +86,10 @@ def atualizar_feedback(mensagem, terminal_box):
 
 # Configurar linhas e colunas da janela principal
 app = ctk.CTk()
+app.title("WhatPy")
+from tkinter import PhotoImage
+icon = PhotoImage(file="C:\\Users\\PEDRO SILVA\\Downloads\\y5nl5645f1y81.png")
+app.iconphoto(True, icon)
 app.geometry("1280x720")
 app.grid_rowconfigure(0, weight=1)  # Primeira linha expande
 app.grid_rowconfigure(1, weight=1)  # Segunda linha expande
@@ -195,8 +199,8 @@ inst_msg.bind("<Enter>", lambda event: mostrar_tooltip(event, "Marcado: As mensa
 inst_msg.bind("<Leave>", esconder_tooltip)
 
 # Label para exibir o valor do slider
-wait_time_value = 10
-tempo_label = ctk.CTkLabel(frametxt, text=f"Tempo de Espera para o envio por mensagens: {wait_time_value}")
+wait_time_value = 30
+tempo_label = ctk.CTkLabel(frametxt, text=f"Tempo de espera em segundos por mensagem: {wait_time_value}")
 tempo_label.grid(row=3, column=0, padx=(220,10), pady=(10,10), sticky="w")
 
 # Slider
@@ -208,7 +212,7 @@ ctk.set_appearance_mode("Dark")  # Ou "Light", depende do seu gosto
 # Criação do CTkSlider
 wait_time = ctk.CTkSlider(
     frametxt, 
-    from_=1, 
+    from_=20, 
     to=40, 
     number_of_steps=39, 
     command=atualizar_tempo, 
