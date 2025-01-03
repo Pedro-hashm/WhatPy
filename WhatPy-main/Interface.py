@@ -6,9 +6,8 @@ import csv
 # Função para mostrar um tooltip (balão de comentário)
 def mostrar_tooltip(event, texto):
     global tooltip
-    x, y, _, _ = event.widget.bbox("insert")
-    x += event.widget.winfo_rootx() + 25
-    y += event.widget.winfo_rooty() + 25
+    x = event.widget.winfo_rootx() + 25
+    y = event.widget.winfo_rooty() + 25
 
     # Cria a janela de tooltip
     tooltip = tk.Toplevel(event.widget)
@@ -141,13 +140,13 @@ txt_box.grid(row=0, column=0, padx=(10,10), pady=(10,10), sticky="nsew", columns
 tab_close_var = ctk.BooleanVar()
 tab_close = ctk.CTkCheckBox(frametxt, text="Fechar Abas?", command=None, variable=tab_close_var)
 tab_close.grid(row=1, column=0, padx=(10, 10), pady=(10,10), sticky="w")
-tab_close.bind("<Enter>", lambda event: mostrar_tooltip(event, "Fechar as abas ao final"))
+tab_close.bind("<Enter>", lambda event: mostrar_tooltip(event, "Marcado: As abas do Whatsapp serão fechadas a cada mensagem enviada\nDesmarcado: As abas permanecerão abertas mesmo após o envio da mensagem"))
 tab_close.bind("<Leave>", esconder_tooltip)
 
 inst_msg_var = ctk.BooleanVar()
 inst_msg = ctk.CTkCheckBox(frametxt, text="Começar Imediatamente?", variable=inst_msg_var, command=toggle_textbox)
 inst_msg.grid(row=2, column=0, padx=(10, 10), pady=(10,10), sticky="w")
-inst_msg.bind("<Enter>", lambda event: mostrar_tooltip(event, "Marcado: As mensagens serão enviads "))
+inst_msg.bind("<Enter>", lambda event: mostrar_tooltip(event, "Marcado: As mensagens serão enviadas logo após apertar o botão de enviar\nDesmarcado: As mensagens serão enviadas após o tempo descrito"))
 inst_msg.bind("<Leave>", esconder_tooltip)
 
 # Label para exibir o valor do slider
