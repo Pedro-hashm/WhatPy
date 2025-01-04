@@ -245,20 +245,32 @@ txtbox_coluna.grid(row=8, column=0, padx=(10,10), pady=(10,10), sticky="w")
 # Botão de enviar mensagem
 from Logica import enviar_mensagem
 
+def verificar_mensagem_vazia(txt_box, atualizar_feedback):
+    # Verifica se a mensagem está vazia
+    mensagem = txt_box.get("0.0", "end").strip()  # Remove espaços em branco
+    if not mensagem:
+        # Atualiza o terminal_box com o aviso
+        atualizar_feedback("Por favor, insira uma mensagem antes de enviar. A caixa de texto está vazia!", terminal_box)
+        return False
+    return True
+
 enviar_button = ctk.CTkButton(
     frametxt, 
     fg_color="green",  # Cor de fundo do botão
     hover_color="green",  # A cor do botão não mudará ao passar o mouse
-    text="Enviar Mensagems", 
-    command=lambda: enviar_mensagem(
-        txt_box.get("0.0", "end"), 
-        int(wait_time.get()), 
-        tab_close_var.get(), 
-        inst_msg_var.get(), 
-        txtbox_hora.get("0.0", "end"),
-        arquivo_img if arquivo_img else None,
-        terminal_box,
-        atualizar_feedback
+    text="Enviar Mensagem", 
+    command=lambda: (
+        verificar_mensagem_vazia(txt_box, atualizar_feedback) and  # Verifica se a mensagem não está vazia
+        enviar_mensagem(
+            txt_box.get("0.0", "end").strip(),  # Remove espaços em branco antes de enviar
+            int(wait_time.get()), 
+            tab_close_var.get(), 
+            inst_msg_var.get(), 
+            txtbox_hora.get("0.0", "end").strip(),
+            arquivo_img if arquivo_img else None,
+            terminal_box,
+            atualizar_feedback
+        )
     )
 )
 enviar_button.grid(row=8, column=0, padx=(100,10), pady=(10,10), sticky="w")
