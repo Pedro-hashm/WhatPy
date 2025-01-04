@@ -4,7 +4,6 @@ from customtkinter import filedialog
 import csv
 arquivo_img = None
 
-
 # Função para mostrar um tooltip (balão de comentário)
 def mostrar_tooltip(event, texto):
     global tooltip
@@ -40,6 +39,9 @@ def toggle_textbox():
 
 # Função carregar CSV
 def carregar_csv():
+    if (txtbox_coluna.get("0.0", "end").strip()) == "":
+        atualizar_feedback("Por favor, selecione o numero da coluna onde estão os telefones antes de carregar o arquivo CSV.", terminal_box)
+        return
     from Logica import get_phones
     arquivo_csv = filedialog.askopenfilename(
         title='Selecione um Arquivo', 
@@ -87,9 +89,6 @@ def atualizar_feedback(mensagem, terminal_box):
 # Configurar linhas e colunas da janela principal
 app = ctk.CTk()
 app.title("WhatPy")
-from tkinter import PhotoImage
-icon = PhotoImage(file="C:\\Users\\PEDRO SILVA\\Downloads\\y5nl5645f1y81.png")
-app.iconphoto(True, icon)
 app.geometry("1280x720")
 app.grid_rowconfigure(0, weight=1)  # Primeira linha expande
 app.grid_rowconfigure(1, weight=1)  # Segunda linha expande
@@ -155,8 +154,6 @@ img_button.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="nsew")
 img_button.bind("<Enter>", lambda event: mostrar_tooltip(event, "Carregar uma imagem"))
 img_button.bind("<Leave>", esconder_tooltip)
 
-
-
 # Caixa de Texto
 txt_box = ctk.CTkTextbox(frametxt)
 txt_box.grid(row=0, column=0, padx=(10,10), pady=(10,10), sticky="nsew", columnspan=2)
@@ -176,10 +173,8 @@ def on_leave(event):
 tab_close.bind("<Enter>", on_enter)
 tab_close.bind("<Leave>", on_leave)
 
-tab_close.bind("<Enter>", lambda event: mostrar_tooltip(event, "Fechar as abas ao final"))
+tab_close.bind("<Enter>", lambda event: mostrar_tooltip(event, "Fechar as abas ao final de cada envio"))
 tab_close.bind("<Leave>", esconder_tooltip)
-
-
 
 inst_msg_var = ctk.BooleanVar()
 inst_msg = ctk.CTkCheckBox(frametxt, text="Começar Imediatamente?", variable=inst_msg_var, command=toggle_textbox, fg_color="green")
@@ -195,7 +190,7 @@ def on_leave_inst_msg(event):
 inst_msg.bind("<Enter>", on_enter_inst_msg)
 inst_msg.bind("<Leave>", on_leave_inst_msg)
 
-inst_msg.bind("<Enter>", lambda event: mostrar_tooltip(event, "Marcado: As mensagens serão enviadas"))
+inst_msg.bind("<Enter>", lambda event: mostrar_tooltip(event, "Marcado: As mensagens serão enviadas assim que apertar o botão de enviar mensagem.\nDesmarcado: As mensagens serão enviadas na hora definida na caixa de texto"))
 inst_msg.bind("<Leave>", esconder_tooltip)
 
 # Label para exibir o valor do slider
