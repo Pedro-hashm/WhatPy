@@ -154,9 +154,9 @@ img_button.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="nsew")
 img_button.bind("<Enter>", lambda event: mostrar_tooltip(event, "Carregar uma imagem"))
 img_button.bind("<Leave>", esconder_tooltip)
 
-# Caixa de Texto
-txt_box = ctk.CTkTextbox(frametxt)
-txt_box.grid(row=0, column=0, padx=(10,10), pady=(10,10), sticky="nsew", columnspan=2)
+# Terminal do Programa
+terminal_box = ctk.CTkTextbox(frametxt, state="disabled")
+terminal_box.grid(row=0, column=0, padx=(10,10), pady=(10,10), sticky="nsew", columnspan=2)
 
 # CheckBoxes
 tab_close_var = ctk.BooleanVar()
@@ -206,16 +206,15 @@ ctk.set_appearance_mode("Dark")  # Ou "Light", depende do seu gosto
 
 # Criação do CTkSlider
 wait_time = ctk.CTkSlider(
-    frametxt, 
-    from_=20, 
-    to=40, 
-    number_of_steps=39, 
-    command=atualizar_tempo, 
-    button_color='green',  # Cor do botão
-    progress_color='green'  # Cor da barra de progresso
+    frametxt,
+    from_=20,
+    to=40,
+    number_of_steps=20,
+    command=atualizar_tempo,
+    button_color='green',
+    progress_color='green'
 )
-
-# Aplicar a grade para a interface
+wait_time.set(30)  # Define um valor inicial padrão
 wait_time.grid(row=3, column=0, padx=(10,10), pady=(10,10), sticky="w")
 
 # Textbox para exibir "Escolha quando a mensagem será enviada"
@@ -228,12 +227,12 @@ txtbox_hora.grid(row=6, column=0, padx=(10,10), pady=(5,10), sticky="w")
 toggle_textbox()
 
 # Terminal do Programa
-feedback_label = ctk.CTkLabel(frametxt, text="Terminal do Programa")
+feedback_label = ctk.CTkLabel(frametxt, text="Digite a Mensagem na Caixa Abaixo:")
 feedback_label.grid(row=1, column=1, padx=(10, 10), pady=(10, 5), sticky="w")
 
-# TextBox do Terminal
-terminal_box = ctk.CTkTextbox(frametxt, corner_radius=10, state="disabled",)
-terminal_box.grid(row=2, column=1, rowspan=8 ,padx=(10,10), pady=(5,10), sticky="nsew")
+# TextBox da Mensagem
+txt_box = ctk.CTkTextbox(frametxt, corner_radius=10)
+txt_box.grid(row=2, column=1, rowspan=8 ,padx=(10,10), pady=(5,10), sticky="nsew")
 
 # Label da TXTbox numero da coluna
 label_coluna = ctk.CTkLabel(frametxt, text="Digite o numero da coluna onde estão os numeros:")
@@ -263,6 +262,56 @@ enviar_button = ctk.CTkButton(
     )
 )
 enviar_button.grid(row=8, column=0, padx=(100,10), pady=(10,10), sticky="w")
+
+# Janela de Duvida
+def abrir_nova_janela():
+    janela_duvida = ctk.CTkToplevel(app)
+    janela_duvida.title("Sobre o Programa")
+    janela_duvida.geometry("800x630")
+
+    label = ctk.CTkLabel(janela_duvida, text="""Como o Programa Funciona?
+Este programa facilita o envio automatizado de mensagens, permitindo personalizar tempo, conteúdo e configurações adicionais.
+
+Caixa de Texto (Mensagem):
+
+Escreva ou cole o texto que deseja enviar.
+Suporta múltiplas linhas para mensagens mais longas.
+                         
+Tempo de Espera (Slider):
+
+Ajuste o tempo (em segundos) entre o envio de cada mensagem para evitar bloqueios ou envios muito rápidos.
+                         
+Horário Programado:
+
+Defina um horário específico para iniciar o envio das mensagens automaticamente.
+                         
+Envio de Imagens (Opcional):
+
+Adicione uma imagem para acompanhar a mensagem, se necessário.
+                         
+Configurações Adicionais:
+
+Fechar Aba Após Envio: Marca se deseja fechar a aba do navegador após concluir o envio.
+Iniciar pelo WhatsApp: Define se a mensagem deve ser enviada diretamente pelo WhatsApp Web.
+                         
+Botão de Envio:
+
+Clique em "Enviar Mensagens" para iniciar o processo com as configurações selecionadas.
+                         
+Acompanhe o status do envio pelo painel de feedback.
+                         
+O programa foi projetado para ser intuitivo e flexível, garantindo eficiência no envio de mensagens personalizadas. 🚀
+
+Considerações Especiais:
+                         
+Esse foi meu primeiro projeto pessoal, pelo menos o primeiro tão complexo, agradeço a todos que se interessaram, e caso encontrem
+algum bug, por favor, fiquem à vontade para abrir um issue no GitHub. 😊
+""")
+    label.pack(pady=20, padx=20)
+
+# Botão Duvida
+duvida_button = ctk.CTkButton(frametxt, text="?", fg_color="red", corner_radius=50, width=25, height=25, command=abrir_nova_janela)
+duvida_button.grid(row=8, column=0, padx=(10,10), pady=(10,10))
 
 # Tooltip do botão
 enviar_button.bind("<Enter>", lambda event: mostrar_tooltip(event, "Enviar as mensagens"))

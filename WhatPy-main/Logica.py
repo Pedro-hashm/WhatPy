@@ -22,6 +22,10 @@ cont = 0
 
 def enviar_mensagem(texto, tempo_espera, tab_fechar, começar_imd, hora_começo, imagem, terminal_box, atualizar_feedback_func):
 
+    if começar_imd == False and hora_começo.strip() == "":
+        atualizar_feedback_func("Por favor, digite o horario em que o programa vai começar a mandar as mensagens", terminal_box)
+        return
+
     # Tratando Tempo_Espera
 
     if começar_imd != True:
@@ -31,6 +35,10 @@ def enviar_mensagem(texto, tempo_espera, tab_fechar, começar_imd, hora_começo,
         nova_hora_começo = hora_começo.replace(",", "").strip()
         hora = int(nova_hora_começo[0:2])
         minuto = int(nova_hora_começo[2:4])
+
+    if len(nova_hora_começo) != 4 or not nova_hora_começo.isdigit():
+        atualizar_feedback_func("Formato de horário inválido! Use HH,MM", terminal_box)
+        return
 
     # Verificação de texto vazio antes de tentar enviar
 
