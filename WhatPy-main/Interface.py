@@ -251,7 +251,7 @@ def verificar_mensagem_vazia(txt_box, atualizar_feedback):
     mensagem = txt_box.get("0.0", "end").strip()  # Remove espaços em branco
     if not mensagem:
         # Atualiza o terminal_box com o aviso
-        atualizar_feedback("Aviso: A mensagem não pode estar vazia!", terminal_box)
+        atualizar_feedback("Por favor, insira uma mensagem antes de enviar. A caixa de texto está vazia!", terminal_box)
         return False
     return True
 
