@@ -21,33 +21,38 @@ def get_phones(arquivo_csv, row_number, terminal_box, atualizar_feedback_func):
 cont = 0
 
 def enviar_mensagem(texto, tempo_espera, tab_fechar, começar_imd, hora_começo, imagem, terminal_box, atualizar_feedback_func):
-
+    
+    nova_hora_começo = ""  # Inicializando nova_hora_começo para garantir que sempre tenha um valor
+    
     if começar_imd == False and hora_começo.strip() == "":
         atualizar_feedback_func("Por favor, digite o horario em que o programa vai começar a mandar as mensagens", terminal_box)
         return
 
     # Tratando Tempo_Espera
-
     if começar_imd != True:
-        nova_hora_começo = str()
         hora = int()
         minuto = int()
         nova_hora_começo = hora_começo.replace(",", "").strip()
+        
+        # Verifica se a entrada possui 4 dígitos
+        if len(nova_hora_começo) != 4 or not nova_hora_começo.isdigit():
+            atualizar_feedback_func("Formato de horário inválido! Use HHMM", terminal_box)
+            return
+        
         hora = int(nova_hora_começo[0:2])
         minuto = int(nova_hora_começo[2:4])
 
-    if len(nova_hora_começo) != 4 or not nova_hora_começo.isdigit():
-        atualizar_feedback_func("Formato de horário inválido! Use HH,MM", terminal_box)
-        return
+        # Verifica se a hora e o minuto são válidos
+        if not (0 <= hora <= 23) or not (0 <= minuto <= 59):
+            atualizar_feedback_func("Hora ou minuto fora do intervalo. Hora deve ser entre 00 e 23, minuto entre 00 e 59.", terminal_box)
+            return
 
     # Verificação de texto vazio antes de tentar enviar
-
     if not texto.strip():  # Verifica se o texto está vazio ou contém apenas espaços
         atualizar_feedback_func("Mensagem vazia!", terminal_box)
         return  # Impede a execução do código para envio da mensagem
 
     # Casos de Execução
-
     for phone in phonesl:
         if começar_imd == True and imagem == None:
             pywhatkit.sendwhatmsg_instantly(phone, texto, tempo_espera, tab_fechar, 5)
@@ -58,7 +63,8 @@ def enviar_mensagem(texto, tempo_espera, tab_fechar, começar_imd, hora_começo,
         elif começar_imd == False and imagem != None:
             pywhatkit.sendwhats_image(phone, imagem, texto, hora, minuto, tempo_espera, tab_fechar, 5)
         
-    atualizar_feedback_func('mensagem enviada', terminal_box)
+    atualizar_feedback_func('Mensagem enviada', terminal_box)
+
         
 
     # print(phonesl)
